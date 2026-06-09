@@ -35,7 +35,7 @@ Built with a **clean, modular architecture**, Neuronix lets you plug in any embe
 |---|---|---|
 | 📄 | **Document Ingestion** | Load & chunk raw text files with intelligent overlap |
 | 🔍 | **BGE Embeddings** | State-of-the-art `BAAI/bge-small-en-v1.5` dense vectors |
-| ⚡ | **Groq LLM** | Fastest inference API — `llama-3.1-8b-instant` |
+| ⚡ | **Multi-LLM Support** | Native integration with **Groq, OpenAI, and Gemini** |
 | 🗂️ | **FAISS Vector Store** | Lightning-fast local similarity search with save/load |
 | 🔌 | **Modular Design** | Swap any component via clean abstract base classes |
 | 🌐 | **FastAPI REST API** | Production-ready `/ask` endpoint, plug & play |
@@ -104,8 +104,11 @@ Neuronix-framework-v1.0/
     │   └── dense_retriever.py   ← Dense vector retriever
     │
     ├── 🤖 llm/
+    │   ├── __init__.py          ← Package exports & factory get_llm()
     │   ├── base.py              ← Abstract BaseLLM
-    │   └── groq_llm.py          ← Groq API client
+    │   ├── groq_llm.py          ← Groq API client
+    │   ├── openai_llm.py        ← OpenAI API client
+    │   └── gemini_llm.py        ← Gemini API client
     │
     ├── 🔗 rag/
     │   └── pipeline.py          ← RAGPipeline orchestrator
@@ -189,8 +192,13 @@ All settings are controlled via environment variables (`.env` file):
 
 | Variable | Default | Description |
 |---|---|---|
-| `GROQ_API_KEY` | *(required)* | Your Groq API key |
+| `DEFAULT_LLM_PROVIDER` | `groq` | Default LLM provider (`groq`, `openai`, `gemini`) |
+| `GROQ_API_KEY` | `""` | Your Groq API key |
 | `GROQ_MODEL_NAME` | `llama-3.1-8b-instant` | Groq model identifier |
+| `OPENAI_API_KEY` | `""` | Your OpenAI API key |
+| `OPENAI_MODEL_NAME` | `gpt-4o-mini` | OpenAI model identifier |
+| `GEMINI_API_KEY` | `""` | Your Gemini API key |
+| `GEMINI_MODEL_NAME` | `gemini-1.5-flash` | Google Gemini model identifier |
 | `EMBEDDING_MODEL` | `BAAI/bge-small-en-v1.5` | HuggingFace embedding model |
 | `CHUNK_SIZE` | `1000` | Characters per text chunk |
 | `CHUNK_OVERLAP` | `200` | Overlap between chunks |
