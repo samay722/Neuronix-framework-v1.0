@@ -9,6 +9,7 @@ class DenseRetriever(BaseRetriever):
         self.vectorstore = vectorstore
         self.k = k
         
-    def retrieve(self, query: str) -> List[Document]:
-        logger.info(f"Retrieving top {self.k} documents for query: '{query}'")
-        return self.vectorstore.similarity_search(query, k=self.k)
+    def retrieve(self, query: str, top_k: int = None) -> List[Document]:
+        k = top_k or self.k
+        logger.info(f"Retrieving top {k} documents for query: '{query}'")
+        return self.vectorstore.similarity_search(query, k=k)
